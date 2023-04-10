@@ -5,7 +5,9 @@ const router = express.Router();
 const validations = require('../middlewares/validations');
 const categoryController = require('../controllers/categoryController');
 
-router.post(
+router
+  .get('/', validations.validateToken, categoryController.getAllCategories)
+  .post(
   '/',
   validations.validateToken,
   validations.validateNewCategory,
