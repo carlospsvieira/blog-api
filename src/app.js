@@ -1,6 +1,7 @@
 const express = require('express');
 const loginRoutes = require('./routers/loginRoutes');
 const userRoutes = require('./routers/userRoutes');
+const categoryRoutes = require('./routers/categoryRoutes');
 
 // ...
 
@@ -15,6 +16,7 @@ app.get('/', (_request, response) => {
 // Routes
 app.use('/login', loginRoutes);
 app.use('/user', userRoutes);
+app.use('/categories', categoryRoutes);
 
 // ...
 
