@@ -5,7 +5,7 @@ const validation = require('../middlewares/validations');
 const postController = require('../controllers/postController');
 
 router
-  .get('/', validation.validateToken)
+  .get('/', validation.validateToken, postController.getAllPosts)
   .get('/:id', validation.validateToken)
   .post(
     '/',
