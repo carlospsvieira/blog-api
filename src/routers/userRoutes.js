@@ -6,6 +6,7 @@ const userController = require('../controllers/userController');
 
 router
   .get('/', validation.validateToken, userController.getAllUsers)
+  .get('/:id', validation.validateToken, userController.getUserById)
   .post(
     '/',
     validation.validateDisplayName,
