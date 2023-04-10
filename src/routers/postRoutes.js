@@ -6,7 +6,7 @@ const postController = require('../controllers/postController');
 
 router
   .get('/', validation.validateToken, postController.getAllPosts)
-  .get('/:id', validation.validateToken)
+  .get('/:id', validation.validateToken, validation.validatePostById, postController.getPostById)
   .post(
     '/',
     validation.validateToken,

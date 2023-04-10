@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { Category } = require('../models');
+const { Category, BlogPost, User } = require('../models');
 
 const { JWT_SECRET } = process.env;
 
@@ -76,10 +76,31 @@ const validateNewPost = async (req, res, next) => {
   next();
 };
 
+const validatePostById = async (req, res, next) => {
+  const { id } = req.params;
+  const post = await BlogPost.findOne({
+    where: { id },
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: ['id', 'displayName', 'email', 'image'],
+      },
+      { model: Category, as: 'categories', attributes: ['id', 'name'] },
+    ],
+  });
+
+  if (!post) {
+    return res.status(404).json({ message: 'Post does not exist' });
+  }
+  next();
+};
+
 module.exports = {
   validateDisplayName,
   validateEmailAndPass,
   validateToken,
   validateNewCategory,
   validateNewPost,
+  validatePostById,
 };
