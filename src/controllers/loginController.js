@@ -1,6 +1,6 @@
 const checkForUserModel = require('../services/loginService');
 
-const checkForUser = async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
   const result = await checkForUserModel({ email, password });
   if (result.token) {
@@ -9,4 +9,4 @@ const checkForUser = async (req, res) => {
   return res.status(result.status).json({ message: result.message });
 };
 
-module.exports = checkForUser;
+module.exports = login;
