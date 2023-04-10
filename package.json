@@ -14,7 +14,8 @@
     "morgan": "1.10.0",
     "mysql2": "2.1.0",
     "sequelize": "6.30.0",
-    "shelljs": "0.8.5"
+    "shelljs": "0.8.5",
+    "snakecase-keys": "^5.4.5"
   },
   "main": "src/server.js",
   "scripts": {

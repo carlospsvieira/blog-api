@@ -54,9 +54,21 @@ const validateNewCategory = async (req, res, next) => {
   next();
 };
 
+const validateNewPost = async (req, res, next) => {
+  const { title, content, categoryIds } = req.body;
+
+  if (!title || !content || !categoryIds) {
+    return res.status(400).json({
+      message: 'Some required fields are missing',
+    });
+  }
+  next();
+};
+
 module.exports = {
   validateDisplayName,
   validateEmailAndPass,
   validateToken,
   validateNewCategory,
+  validateNewPost,
 };
