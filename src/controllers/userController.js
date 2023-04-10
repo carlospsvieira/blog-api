@@ -1,12 +1,24 @@
-const createNewUser = require('../services/userService');
+const userService = require('../services/userService');
 
 const newUser = async (req, res) => {
   const { body } = req;
-  const result = await createNewUser(body);
+  const result = await userService.createNewUser(body);
   if (result.token) {
     return res.status(result.status).json({ token: result.token });
   }
   return res.status(result.status).json({ message: result.message });
 };
 
-module.exports = newUser;
+const getAllUsers = async (_req, res) => {
+  try {
+    const users = await userService.getAllUsers();
+    return res.status(200).json(users);
+  } catch (err) {
+    return res.status(400).json({ message: err.message });
+  }
+};
+
+module.exports = {
+  newUser,
+  getAllUsers,
+};

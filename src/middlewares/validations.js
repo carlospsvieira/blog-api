@@ -1,3 +1,7 @@
+const jwt = require('jsonwebtoken');
+
+const { JWT_SECRET } = process.env;
+
 const validateDisplayName = (req, res, next) => {
   const { displayName } = req.body;
 
@@ -18,16 +22,32 @@ const validateEmailAndPass = (req, res, next) => {
   }
 
   if (password.length < 6) {
-    return res
-      .status(400)
-      .json({
-        message: '"password" length must be at least 6 characters long',
-      });
+    return res.status(400).json({
+      message: '"password" length must be at least 6 characters long',
+    });
   }
   next();
+};
+
+const validateToken = (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (!token) {
+    return res.status(401).json({ message: 'Token not found' });
+  }
+  try {
+    const isValid = jwt.verify(token, JWT_SECRET);
+    req.user = isValid;
+
+    next();
+  } catch (err) {
+    console.log(err);
+    return res.status(401).json({ message: 'Expired or invalid token' });
+  }
 };
 
 module.exports = {
   validateDisplayName,
   validateEmailAndPass,
+  validateToken,
 };
