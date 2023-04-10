@@ -69,7 +69,9 @@ const validateNewPost = async (req, res, next) => {
   });
 
   if (categories.length !== categoryIds.length) {
-    return { status: 400, message: 'one or more "categoryIds" not found' };
+    return res
+      .status(400)
+      .json({ message: 'one or more "categoryIds" not found' });
   }
   next();
 };
